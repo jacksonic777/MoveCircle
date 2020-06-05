@@ -83,8 +83,49 @@ namespace MoveCircle
             //初めて呼ばれて以前の値が無い時
             if(previousX == 0)
             {
+                previousX = positionX;
+            }
+            if (previousY == 0)
+            {
+                previousY = positionY;
+            }
+            //
+            using(Graphics g = Graphics.FromImage(canvas))
+            {
+                //円を白で描く
+                g.FillEllipse(Brushes.White, previousX, previousY, radius * 2, radius * 2);
+
+                //mainPictureBoxに表示する
+                pictureBox.Image = canvas;
+            }
+        }
+
+
+        //指定した位置にボールを動かす
+        public void Move()
+        {
+            // 以前の表示を削除
+            DeleteCircle();
+
+            // 新しい移動先の計算
+            int x = positionX + pitch * directionX;
+            int y = positionY + pitch * directionY;
+
+            // 壁で跳ね返る補正
+            if(x >= pictureBox.Width - radius * 2)  // 右端に来た場合の判定
+            {
+                directionX = -1;
+            }
+            if(x <= 0)                              // 左端に来た場合の判定
+            {
+                directionX = +1;
+            }
+            if(y >= pictureBox.Height - radius * 2) // 下端に来た場合の判定
+            {
 
             }
         }
+
+
     }
 }
